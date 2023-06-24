@@ -219,6 +219,14 @@ bool WebSocketsServerCore::broadcastTXT(String & payload) {
     return broadcastTXT((uint8_t *)payload.c_str(), payload.length());
 }
 
+int WebSocketsServerCore::canSend(uint8_t num) {
+    WSclient_t * client = &_clients[num];
+    if(!clientIsConnected(client)) {
+        return -1;
+    }
+    return client->tcp->canWrite();
+}
+
 /**
  * send binary data to client
  * @param num uint8_t client id

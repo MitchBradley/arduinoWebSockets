@@ -53,6 +53,8 @@ class WebSocketsServerCore : protected WebSockets {
         const char * mandatoryHttpHeaders[],
         size_t mandatoryHttpHeaderCount);
 
+    int canSend(uint8_t num);
+
     bool sendTXT(uint8_t num, uint8_t * payload, size_t length = 0, bool headerToPayload = false);
     bool sendTXT(uint8_t num, const uint8_t * payload, size_t length = 0);
     bool sendTXT(uint8_t num, char * payload, size_t length = 0, bool headerToPayload = false);
