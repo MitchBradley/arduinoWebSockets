@@ -224,7 +224,7 @@ int WebSocketsServerCore::canSend(uint8_t num) {
     if(!clientIsConnected(client)) {
         return -1;
     }
-    return client->tcp->canWrite();
+    return client->tcp->canWrite(0);
 }
 
 /**
