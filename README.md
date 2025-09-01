@@ -1,3 +1,14 @@
+This is a fork of the repo listed below.  The purpose is to add a "canSend()" method to
+determine if a message can be sent over the WebSocket without blocking.  That feature
+is useful for FluidNC, which sends frequent status messages to its WebUI user interface.
+If the WiFI connection from the FluidNC controller to the WebUI browser is slow or stalled,
+blocking can result in bad performance.  It is better to drop a status message than to block.
+
+The new method is present in the canSend branch.  It in turn depends on a new canWrite()
+method in the WiFi driver than manages the underlying TCP connection, so this library
+must be linked against a modified version of the WiFi library, which can be found at
+https://github.com/MitchBradley/WiFi#canWrite .
+
 WebSocket Server and Client for Arduino [![Build Status](https://github.com/Links2004/arduinoWebSockets/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Links2004/arduinoWebSockets/actions?query=branch%3Amaster)
 ===========================================
 
