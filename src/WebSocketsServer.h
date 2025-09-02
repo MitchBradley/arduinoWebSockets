@@ -53,6 +53,8 @@ class WebSocketsServerCore : protected WebSockets {
         const char * mandatoryHttpHeaders[],
         size_t mandatoryHttpHeaderCount);
 
+    int canSend(uint8_t num);
+
     bool sendTXT(uint8_t num, uint8_t * payload, size_t length = 0, bool headerToPayload = false);
     bool sendTXT(uint8_t num, const uint8_t * payload, size_t length = 0);
     bool sendTXT(uint8_t num, char * payload, size_t length = 0, bool headerToPayload = false);
@@ -90,11 +92,11 @@ class WebSocketsServerCore : protected WebSockets {
     void enableHeartbeat(uint32_t pingInterval, uint32_t pongTimeout, uint8_t disconnectTimeoutCount);
     void disableHeartbeat();
 
-#if (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266_ASYNC) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP32) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_RP2040)
+#if(WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266_ASYNC) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP32) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_RP2040)
     IPAddress remoteIP(uint8_t num);
 #endif
 
-#if (WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
+#if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
     void loop(void);    // handle client data only
 #endif
 
@@ -123,7 +125,7 @@ class WebSocketsServerCore : protected WebSockets {
     void clientDisconnect(WSclient_t * client);
     bool clientIsConnected(WSclient_t * client);
 
-#if (WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
+#if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
     void handleClientData(void);
 #endif
 
@@ -199,7 +201,7 @@ class WebSocketsServerCore : protected WebSockets {
         return true;
     }
 
-#if (WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
+#if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
     WSclient_t * handleNewClient(WEBSOCKETS_NETWORK_CLASS * tcpClient);
 #endif
 
@@ -224,15 +226,16 @@ class WebSocketsServer : public WebSocketsServerCore {
     void begin(void);
     void close(void);
 
-#if (WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
+#if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
     void loop(void);    // handle incoming client and client data
 #else
     // Async interface not need a loop call
-    void loop(void) __attribute__((deprecated)) {}
+    void loop(void) __attribute__((deprecated)) {
+    }
 #endif
 
   protected:
-#if (WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
+#if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
     void handleNewClients(void);
 #endif
 
